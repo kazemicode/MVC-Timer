@@ -1,4 +1,12 @@
 public class CounterController
+        /*
+         * Defines the start and stop values of the counter
+         * Creates an instance of CounterModel to set counter
+         * value to startValue.
+         * Start method runs while the current state of the
+         * counter has not surpassed the endValue
+         */
+
 {
     private int startValue;
     private int endValue;

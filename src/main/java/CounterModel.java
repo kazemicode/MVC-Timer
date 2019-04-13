@@ -1,4 +1,9 @@
 public class CounterModel
+    /*
+     * Keeps track of the current state of the counter
+     * Defines the initial value of the counter
+     * Increments the counter
+     */
 {
     private int counter;
     public CounterModel(int initialValue)
@@ -16,8 +21,4 @@ public class CounterModel
         return counter;
     }
 
-    public void setCounter(int counter)
-    {
-        this.counter = counter;
-    }
 }
