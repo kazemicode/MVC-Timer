@@ -1,4 +1,9 @@
-public class CounterController
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class CounterController implements ActionListener
         /*
          * Defines the start and stop values of the counter
          * Creates an instance of CounterModel to set counter
@@ -8,39 +13,71 @@ public class CounterController
          */
 
 {
-    private int startValue;
-    private int endValue;
+    private static int startValue = 0;
+    private static int endValue = 60;
+    static int PAUSE = 1000; // ms
     private CounterModel model;
+    private CounterView view;
+    private JButton start;
+    private static CounterWindow cw;
 
-    public CounterController(int startValue, int endValue)
+
+    public CounterController(CounterView view, CounterModel model)
     {
-        this.startValue = startValue;
-        this.endValue = endValue;
-        model = new CounterModel(startValue);
+        this.start = cw.getStartTimer();
+        start.addActionListener(this);
+        this.model = model;
+        this.view = view;
     }
 
 
-    public void start()
+
+    public void actionPerformed(ActionEvent e)
     {
-        while(model.getCounter() <= endValue)
+        Packer packerThread = new Packer();
+        packerThread.start();
+    }
+
+    public static void main(String[] args)
+    {
+        CounterModel cm = new CounterModel(startValue);
+        cw = new CounterWindow();
+        CounterController c = new CounterController(new CounterView(cw), new CounterModel(startValue));
+        cw.setVisible(true);
+
+    }
+
+    // private inner class
+
+    private class Packer extends Thread
+    {
+        @Override
+        public void run()
         {
-            CounterView.display(model.getCounter());
-            model.increment();
+
+            while(model.getMin() <= endValue)
+            {
+                view.display(model.getTimerString());
+                model.increment();
+                doNothing(PAUSE);
+            }
+        }
+
+        public void doNothing(int ms)
+        {
             try
             {
-                Thread.sleep(1000);
+                Thread.sleep(ms);
 
             }
             catch (InterruptedException e)
             {
                 e.printStackTrace();
+                System.exit(0);
             }
         }
     }
 
-    public static void main(String[] args)
-    {
-        CounterController c = new CounterController(0, 60);
-        c.start();
-    }
+
 }
+

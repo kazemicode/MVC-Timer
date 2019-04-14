@@ -1,10 +1,20 @@
+import java.awt.Graphics;
 public class CounterView
         /*
          * Displays the current value of counter
          */
 {
-    public static void display(int counterValue)
+    private CounterWindow cw;
+
+    public CounterView(CounterWindow cw)
     {
-        System.out.println(counterValue);
+        this.cw = cw;
     }
+
+
+    public void display(String timerString)
+    {
+        cw.getTimeText().setText(timerString);
+    }
+
 }

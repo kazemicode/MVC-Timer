@@ -1,24 +1,53 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class CounterModel
-    /*
-     * Keeps track of the current state of the counter
-     * Defines the initial value of the counter
-     * Increments the counter
-     */
+        /*
+         * Keeps track of the current state of the counter
+         * Defines the initial value of the counter
+         * Increments the counter
+         */
 {
-    private int counter;
-    public CounterModel(int initialValue)
+    private int min, sec;
+    private String timerString;
+    public CounterModel(int startValue)
     {
-        counter = initialValue;
+        min = startValue;
+        sec = 0;
+
+        timerString = "0:00";
     }
 
     public void increment()
     {
-        counter++;
+        sec++;
+        if(sec == 60)
+        {
+            sec = 0;
+            min++;
+        }
+
+        timerString = min + ":";
+
+        if(sec < 10)
+        {
+            timerString += "0";
+        }
+        timerString += sec;
     }
 
-    public int getCounter()
+    public String getTimerString()
     {
-        return counter;
+        return timerString;
     }
+
+    public int getMin()
+    {
+        return min;
+    }
+
+
 
 }
